@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         SLACK_USER_PXU = 'U08FE9PGHU6'
-        SLACK_CHANNEL = '#forum-group-project'
+        SLACK_CHANNEL = '#jenkins-slack'
     }
 
     stages {
