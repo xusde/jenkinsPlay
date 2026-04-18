@@ -34,7 +34,7 @@ pipeline {
         success {
             echo 'Pipeline succeeded!' 
             slackSend(
-                channel: '#deployments',       // override the default channel
+                channel: '#forum-group-project',       // override the default channel
                 color: 'good',                 // 'good' (green), 'warning' (yellow), 'danger' (red), or a hex like '#0000FF'
                 message: 'Build passed!'
             )
@@ -42,7 +42,7 @@ pipeline {
         failure { 
             echo 'Pipeline failed!'
             slackSend(
-                channel: '#deployments',       // override the default channel
+                channel: '#forum-group-project',       // override the default channel
                 color: 'good',                 // 'good' (green), 'warning' (yellow), 'danger' (red), or a hex like '#0000FF'
                 message: 'Build failed!'
             )
