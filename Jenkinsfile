@@ -37,6 +37,7 @@ pipeline {
                 channel: '#forum-group-project',       // override the default channel
                 color: 'good',                 // 'good' (green), 'warning' (yellow), 'danger' (red), or a hex like '#0000FF'
                 message: """
+                @pxu
                 *Congrats! Build Succeeded!*
                 Job: `${env.JOB_NAME}`
                 Build: #${env.BUILD_NUMBER}
@@ -52,6 +53,7 @@ pipeline {
                 channel: '#forum-group-project',       // override the default channel
                 color: 'good',                 // 'good' (green), 'warning' (yellow), 'danger' (red), or a hex like '#0000FF'
                 message: """
+                @pxu
                 *Attention! Build Failed!*
                 Job: `${env.JOB_NAME}`
                 Build: #${env.BUILD_NUMBER}
