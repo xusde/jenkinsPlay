@@ -1,6 +1,11 @@
 pipeline {
     agent any                        // run on any available agent
 
+    environment {
+        SLACK_USER_PXU = U08FE9PGHU6
+        SLACK_CHANNEL = #forum-group-project
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -34,10 +39,10 @@ pipeline {
         success {
             echo 'Pipeline succeeded!' 
             slackSend(
-                channel: '#forum-group-project',       // override the default channel
+                channel: env.SLACK_CHANNEL,       // override the default channel
                 color: 'good',                 // 'good' (green), 'warning' (yellow), 'danger' (red), or a hex like '#0000FF'
                 message: """
-                @pxu
+                <@${env.SLACK_USER_PXU}>
                 *Congrats! Build Succeeded!*
                 Job: `${env.JOB_NAME}`
                 Build: #${env.BUILD_NUMBER}
@@ -50,10 +55,10 @@ pipeline {
         failure { 
             echo 'Pipeline failed!'
             slackSend(
-                channel: '#forum-group-project',       // override the default channel
+                channel: env.SLACK_CHANNEL,       // override the default channel
                 color: 'good',                 // 'good' (green), 'warning' (yellow), 'danger' (red), or a hex like '#0000FF'
                 message: """
-                @pxu
+                <@${env.SLACK_USER_PXU}>
                 *Attention! Build Failed!*
                 Job: `${env.JOB_NAME}`
                 Build: #${env.BUILD_NUMBER}
