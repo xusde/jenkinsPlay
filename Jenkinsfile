@@ -36,7 +36,14 @@ pipeline {
             slackSend(
                 channel: '#forum-group-project',       // override the default channel
                 color: 'good',                 // 'good' (green), 'warning' (yellow), 'danger' (red), or a hex like '#0000FF'
-                message: 'Build passed!'
+                message: """
+                *Congrats! Build Succeeded!*
+                Job: `${env.JOB_NAME}`
+                Build: #${env.BUILD_NUMBER}
+                Branch: `${env.GIT_BRANCH}`
+                Duration: ${currentBuild.durationString}
+                <${env.BUILD_URL}|View build logs>
+                """
             )
         }
         failure { 
@@ -44,7 +51,14 @@ pipeline {
             slackSend(
                 channel: '#forum-group-project',       // override the default channel
                 color: 'good',                 // 'good' (green), 'warning' (yellow), 'danger' (red), or a hex like '#0000FF'
-                message: 'Build failed!'
+                message: """
+                *Attention! Build Failed!*
+                Job: `${env.JOB_NAME}`
+                Build: #${env.BUILD_NUMBER}
+                Branch: `${env.GIT_BRANCH}`
+                Duration: ${currentBuild.durationString}
+                <${env.BUILD_URL}|View build logs>
+                """
             )
         }
     }
