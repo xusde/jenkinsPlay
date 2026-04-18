@@ -31,7 +31,21 @@ pipeline {
     }
 
     post {
-        success { echo 'Pipeline succeeded!' }
-        failure { echo 'Pipeline failed!' }
+        success {
+            echo 'Pipeline succeeded!' 
+            slackSend(
+                channel: '#deployments',       // override the default channel
+                color: 'good',                 // 'good' (green), 'warning' (yellow), 'danger' (red), or a hex like '#0000FF'
+                message: 'Build passed!'
+            )
+        }
+        failure { 
+            echo 'Pipeline failed!'
+            slackSend(
+                channel: '#deployments',       // override the default channel
+                color: 'good',                 // 'good' (green), 'warning' (yellow), 'danger' (red), or a hex like '#0000FF'
+                message: 'Build failed!'
+            )
+        }
     }
 }
