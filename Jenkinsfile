@@ -2,8 +2,8 @@ pipeline {
     agent any                        // run on any available agent
 
     environment {
-        SLACK_USER_PXU = U08FE9PGHU6
-        SLACK_CHANNEL = #forum-group-project
+        SLACK_USER_PXU = 'U08FE9PGHU6'
+        SLACK_CHANNEL = '#forum-group-project'
     }
 
     stages {
