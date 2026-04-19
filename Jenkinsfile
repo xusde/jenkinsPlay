@@ -40,6 +40,17 @@ pipeline {
             }
         }
 
+
+        stage('PR checks') {
+        when {
+            changeRequest()     // ONLY runs on PRs — never on real branches
+        }
+        steps {
+            echo "Validating PR #${env.CHANGE_ID}"
+            echo "Merging: ${env.CHANGE_BRANCH} → ${env.CHANGE_TARGET}"
+        }
+    }
+
     }
 
     post {
