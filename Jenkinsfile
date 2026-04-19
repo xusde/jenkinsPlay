@@ -1,5 +1,5 @@
 pipeline {
-    agent none // run on any available agent
+    agent any // run on any available agent
 
     triggers {
         githubPush()
@@ -26,7 +26,7 @@ pipeline {
         }
 
         stage('Test') {
-            parellel {
+            parallel {
                 stage('Test on usw2') {
                     agent { docker { image ('node:20-alpine') } }
                     steps {
@@ -76,7 +76,7 @@ pipeline {
             echo 'Pipeline failed!'
             slackSend(
                 channel: env.SLACK_CHANNEL,       // override the default channel
-                color: 'good',                 // 'good' (green), 'warning' (yellow), 'danger' (red), or a hex like '#0000FF'
+                color: 'danger',                 // 'good' (green), 'warning' (yellow), 'danger' (red), or a hex like '#0000FF'
                 message: """
                 <@${env.SLACK_USER_PXU}>
                 *Attention! Build Failed!*
