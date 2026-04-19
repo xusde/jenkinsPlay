@@ -3,7 +3,7 @@ pipeline {
 
     triggers {
         githubPush()
-        cron('H/2 * * * *')
+        cron('H/* 5 * * *')
     }
     
     environment {
@@ -48,6 +48,16 @@ pipeline {
             }
         }
 
+
+        stage('check unstash') {
+            steps {
+                sh 'echo "checking unstashing..."'
+                unstash name: 'pass.txt'
+                sh 'cat pass.txt'
+            }
+        }
+        
+        
         stage('Deploy') {
             when {
                 branch 'main'        // only deploy from main branch
