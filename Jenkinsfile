@@ -3,7 +3,7 @@ pipeline {
 
     trigger {
         githubPush()
-        cron(H/1 * * * *)
+        cron('H/1 * * * *')
     }
     
     environment {
