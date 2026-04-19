@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        docker { image 'node:20-alpine' }
-    }// run on any available agent
+    agent none // run on any available agent
 
     triggers {
         githubPush()
@@ -28,8 +26,22 @@ pipeline {
         }
 
         stage('Test') {
-            steps {
-                sh 'echo "Testing..."'
+            parellel {
+                stage('Test on usw2') {
+                    agent { docker { image ('node:20-alpine') } }
+                    steps {
+                        echo 'test on usw2'
+                        sh 'npm ci'
+                    }
+                }
+
+                stage('Test on use2') {
+                    agent { docker { image ('node:20-alpine') } }
+                    steps {
+                        echo 'test on use2'
+                        sh 'npm ci'
+                    }
+                }
             }
         }
 
