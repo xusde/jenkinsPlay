@@ -19,6 +19,7 @@ pipeline {
         }
 
         stage('Build') {
+            agent { docker { image 'node:20-alpine' } }
             steps {
                 sh 'npm --version'
                 echo 'npm build'
