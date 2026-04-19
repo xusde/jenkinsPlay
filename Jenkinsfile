@@ -1,7 +1,7 @@
 pipeline {
     agent any                        // run on any available agent
 
-    trigger {
+    triggers {
         githubPush()
         cron('H/1 * * * *')
     }
