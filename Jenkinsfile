@@ -1,6 +1,11 @@
 pipeline {
     agent any                        // run on any available agent
 
+    trigger {
+        githubPush()
+        cron(H/1 * * * *)
+    }
+    
     environment {
         SLACK_USER_PXU = 'U08FE9PGHU6'
         SLACK_CHANNEL = '#jenkins-slack'
