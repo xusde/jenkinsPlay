@@ -3,7 +3,7 @@ pipeline {
 
     triggers {
         githubPush()
-        cron('H/* 5 * * *')
+        cron('H/0 5 * * *')
     }
     
     environment {
@@ -34,7 +34,7 @@ pipeline {
                         echo 'test on usw2'
                         sh 'touch pass.txt'
                         sh 'echo "hello" >> pass.txt'
-                        stash name: 'pass.txt'
+                        stash name: 'pass' includes: 'pass.txt'
                     }
                 }
 
@@ -52,7 +52,7 @@ pipeline {
         stage('check unstash') {
             steps {
                 sh 'echo "checking unstashing..."'
-                unstash name: 'pass.txt'
+                unstash name: 'pass'
                 sh 'cat pass.txt'
             }
         }
@@ -64,7 +64,7 @@ pipeline {
             }
             steps {
                 sh 'echo "Deploying to staging..."'
-                unstash name: 'pass.txt'
+                unstash name: 'pass'
                 sh 'cat pass.txt'
             }
         }
