@@ -34,7 +34,7 @@ pipeline {
                         echo 'test on usw2'
                         sh 'touch pass.txt'
                         sh 'echo "hello" >> pass.txt'
-                        stash name: 'pass' includes: 'pass.txt'
+                        stash name: 'pass', includes: 'pass.txt'
                     }
                 }
 
