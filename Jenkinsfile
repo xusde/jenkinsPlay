@@ -1,9 +1,11 @@
 pipeline {
-    agent any                        // run on any available agent
+    agent {
+        docker { image 'node:20-alpine' }
+    }// run on any available agent
 
     triggers {
         githubPush()
-        cron('H/1 * * * *')
+        cron('H/2 * * * *')
     }
     
     environment {
@@ -20,7 +22,8 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'echo "Building..."'
+                sh 'npm --version'
+                echo 'npm build'
             }
         }
 
