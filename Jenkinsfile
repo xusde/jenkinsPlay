@@ -32,7 +32,9 @@ pipeline {
                     agent { docker { image ('node:20-alpine') } }
                     steps {
                         echo 'test on usw2'
-                        sh 'npm ci'
+                        sh 'touch pass.txt'
+                        sh 'echo "hello" >> pass.txt'
+                        stash name: 'pass.txt'
                     }
                 }
 
@@ -40,7 +42,7 @@ pipeline {
                     agent { docker { image ('node:20-alpine') } }
                     steps {
                         echo 'test on use2'
-                        sh 'npm ci'
+            
                     }
                 }
             }
@@ -52,6 +54,8 @@ pipeline {
             }
             steps {
                 sh 'echo "Deploying to staging..."'
+                unstash name: 'pass.txt'
+                sh 'cat pass.txt'
             }
         }
     }
