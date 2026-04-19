@@ -1,33 +1,50 @@
-@Library('my-lib') _     // the underscore is required — it imports the library into scope
+@Library('my-lib') _
 
 pipeline {
-    agent any
+    agent none
+
+    triggers {
+        githubPush()
+    }
 
     stages {
-        stage('Build') {
+
+        stage('Build & Test') {
+            // runs on EVERY branch — always verify the code works
+            agent { docker { image 'node:20-alpine' } }
             steps {
-                // call your shared function with named options
-                myBuild(nodeVersion: '20', runLint: true)
+                sh 'npm ci'
+                sh 'npm test'
+            }
+            post {
+                always {
+                    junit 'test-results/**/*.xml'
+                }
             }
         }
 
-        stage('Deploy staging') {
+        stage('Deploy to staging') {
+            // only runs on the develop branch
+            when { branch 'develop' }
+            agent { docker { image 'node:20-alpine' } }
             steps {
                 myDeploy('staging')
             }
         }
 
-        stage('Deploy production') {
+        stage('Deploy to production') {
+            // only runs on main — and requires manual approval
             when { branch 'main' }
+            agent { docker { image 'node:20-alpine' } }
             steps {
                 myDeploy('production')
             }
         }
+
     }
 
     post {
         success  { notifySlack('success') }
         failure  { notifySlack('failure') }
-        unstable { notifySlack('unstable') }
     }
 }
